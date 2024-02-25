@@ -57,18 +57,18 @@ xreset_gpio:
     // Reset PADs bank 0 and IO bank 0
     // *****************************************************
     push {{r0-r7, lr}}
-	// take RESETS_PADS_BANK0 and RESETS_IO_BANK0 out of reset
-	ldr r1, =RESETS_CTRL
-	ldr r0, [r1]
-	ldr r2, =(RESETS_PADS_BANK0 | RESETS_IO_BANK0)
-	bics r0, r0, r2
-	str r0, [r1]
+    // take RESETS_PADS_BANK0 and RESETS_IO_BANK0 out of reset
+    ldr r1, =RESETS_CTRL
+    ldr r0, [r1]
+    ldr r2, =(RESETS_PADS_BANK0 | RESETS_IO_BANK0)
+    bics r0, r0, r2
+    str r0, [r1]
 
-unreset_check_loop:
-	ldr r1, =RESETS_DONE
-	ldr r0, [r1]
-	tst r0, r2
-	beq unreset_check_loop
+reset_check:
+    ldr r1, =RESETS_DONE
+    ldr r0, [r1]
+    tst r0, r2
+    beq reset_check
 
     pop {{r0-r7, pc}}
 
